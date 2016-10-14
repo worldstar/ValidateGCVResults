@@ -15,7 +15,7 @@ namespace CompareTxt
             Program CT = new Program();
             Console.WriteLine("程式已開始啟動，將會顯示進入以及離開訊息。");
             //CT.NoRepeatJpg();
-            //CT.CompareTxt();
+            CT.CompareTxt();
             CT.CompareTxt2();
             Console.Read();
         }
@@ -67,7 +67,7 @@ namespace CompareTxt
             for (int i = 0; i < STxt.Length / 5; i++)
             {
                 name2[i] = STxt[name2index];
-                name2index += 2;
+                name2index += 5;
             }
 
             //計算成功與失敗
@@ -83,10 +83,10 @@ namespace CompareTxt
             {
                 if (name1[i].Trim() == name2[i].Trim())
                 {
-                    sw.Write(name1[i].Trim() + ",");
-                    sw.Write(jpg[i].Trim() + ",");
-                    sw.Write(local[i].Trim() + ",");
-                    sw.Write(name2[i].Trim() + ",");
+                    sw.Write(name1[i] + ",");
+                    sw.Write(jpg[i] + ",");
+                    sw.Write(local[i] + ",");
+                    sw.Write(name2[i] + ",");
                     sw.WriteLine("True");
                     sw.WriteLine();
 
@@ -103,10 +103,10 @@ namespace CompareTxt
                 }
                 else
                 {
-                    sw.Write(name1[i].Trim() + ",");
-                    sw.Write(jpg[i].Trim() + ",");
-                    sw.Write(local[i].Trim() + ",");
-                    sw.Write(name2[i].Trim() + ",");
+                    sw.Write(name1[i] + ",");
+                    sw.Write(jpg[i] + ",");
+                    sw.Write(local[i] + ",");
+                    sw.Write(name2[i] + ",");
                     sw.WriteLine("False");
                     sw.WriteLine();
 
@@ -272,7 +272,7 @@ namespace CompareTxt
             for (int i = 0; i < STxt.Length / 5; i++)
             {
                 name2[i] = STxt[name2index];
-                name2index += 2;
+                name2index += 5;
             }
 
             //計算成功與失敗
@@ -287,18 +287,15 @@ namespace CompareTxt
             String[] SynonymWordCollection;
             SynonymWordCollection = Directory.GetFiles(SynonymPath, "*.txt");
 
-            int textsuccess = 0;
-            int textunsuccess = 0;
-
             //將Txt的name1與name2進行比對，並且jpg需求相等。
             for (int i = 0; i < name1.Length; i++)
             {
                 if (name1[i].Trim() == name2[i].Trim())
                 {
-                    sw.Write(name1[i].Trim() + ",");
-                    sw.Write(jpg[i].Trim() + ",");
-                    sw.Write(local[i].Trim() + ",");
-                    sw.Write(name2[i].Trim() + ",");
+                    sw.Write(name1[i] + ",");
+                    sw.Write(jpg[i] + ",");
+                    sw.Write(local[i] + ",");
+                    sw.Write(name2[i] + ",");
                     sw.WriteLine("True");
                     sw.WriteLine();
 
@@ -317,22 +314,21 @@ namespace CompareTxt
                 {
                     for (int j = 0; j < SynonymWordCollection.Length; j++)
                     {
-                        Boolean insuccess = true;
-                        insuccess = true;
+                        Boolean insuccess = false;
+                        insuccess = false;
                         if (name1[i].Trim() == Path.GetFileNameWithoutExtension(SynonymWordCollection[j]))
                         {
                             string SynonymWordTxt = File.ReadAllText(SynonymWordCollection[j]);
                             string[] SSynonymWordTxt = SynonymWordTxt.Split('\n');
-                            
 
-                            foreach (string S in SSynonymWordTxt)
+                            for (int SSWTcount = 0; SSWTcount < SSynonymWordTxt.Length; SSWTcount++)
                             {
-                                if (name2[i].Trim() == S.Trim())
+                                if (name2[i].Trim() == SSynonymWordTxt[SSWTcount].Trim())
                                 {
-                                    sw.Write(name1[i].Trim() + ",");
-                                    sw.Write(jpg[i].Trim() + ",");
-                                    sw.Write(local[i].Trim() + ",");
-                                    sw.Write(name2[i].Trim() + ",");
+                                    sw.Write(name1[i] + ",");
+                                    sw.Write(jpg[i] + ",");
+                                    sw.Write(local[i] + ",");
+                                    sw.Write(name2[i] + ",");
                                     sw.WriteLine("True");
                                     sw.WriteLine();
 
@@ -346,16 +342,15 @@ namespace CompareTxt
                                     }
 
                                     success += 1;
-                                    insuccess = false;
-                                    textsuccess += 1;
+                                    insuccess = true;
                                 }
                             }
-                            if (insuccess)
+                            if (insuccess == false)
                             {
-                                sw.Write(name1[i].Trim() + ",");
-                                sw.Write(jpg[i].Trim() + ",");
-                                sw.Write(local[i].Trim() + ",");
-                                sw.Write(name2[i].Trim() + ",");
+                                sw.Write(name1[i] + ",");
+                                sw.Write(jpg[i] + ",");
+                                sw.Write(local[i] + ",");
+                                sw.Write(name2[i] + ",");
                                 sw.WriteLine("False");
                                 sw.WriteLine();
 
@@ -369,7 +364,6 @@ namespace CompareTxt
                                 }
 
                                 unsuccess += 1;
-                                textunsuccess += 1;
                             }
                         }
                     }
@@ -404,9 +398,6 @@ namespace CompareTxt
             Console.WriteLine("比對總數：" + (success + unsuccess));
             Console.WriteLine("比對成功：" + (success));
             Console.WriteLine("比對失敗：" + (unsuccess));
-
-            Console.WriteLine("01" + textsuccess);
-            Console.WriteLine("02" + textunsuccess);
 
             Console.WriteLine("離開CompareTxt2");
             
