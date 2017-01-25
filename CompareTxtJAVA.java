@@ -9,6 +9,7 @@ import java.io.FileWriter;//write the Txt
 import java.io.FileReader;//Read the Txt
 import java.io.BufferedReader;//Read Temporary
 import java.io.IOException;//Detection
+import java.util.*;
 import java.io.*;
 
 /**
@@ -25,29 +26,25 @@ public class CompareTxtJAVA {
             // TODO code application logic here
             CompareTxtJAVA CT = new CompareTxtJAVA();
             System.out.println("CompareTxtJAVA Starting...");
-            
+
             CT.CompareTxt();
-            
+
             System.out.println("CompareTxtJAVA Finish.");
         }
-    }    
+    }
     
-    private void CompareTxt()throws IOException{
+    private void CompareTxt() throws IOException {
         {
-            //Path
-            String TxtCaltechPath = "@../../File/Caltech101Results.txt";
-            String SynonymPath = "@../../File/Synonym word";
-            //SW Path
-            String NewTxtPath1 = "@../../File/CompareTxt1.txt";
-            String NewTxtPath2 = "@../../File/CompareTxt2.txt";
-            
-            System.out.println("OupputFiles Starting...");
-            //Create a new txt(true = no-cover && false = cover)
-            FileWriter sw1 = new FileWriter(NewTxtPath1, false);
-            FileWriter sw2 = new FileWriter(NewTxtPath2, false);
+            System.out.println("NoRepeatJpg Starting...");
+            Start();
 
-            System.out.println("ReadTxt Starting...");
-            start();
+            //NoRepeatJpg Path
+            String TxtCaltechPath = "@../../File/Caltech101Results.txt";
+            //CompareTxt Path
+            String NewTxtPath2 = "@../../File/CompareTxt1.txt";
+            //CompareTxt2 Path
+            String NewTxtPath4 = "@../../File/CompareTxt2.txt";
+            String SynonymPath = "@../../File/Synonym word";
             
             //Read Caltech101Results
             FileReader fr = new FileReader(TxtCaltechPath);
@@ -56,16 +53,19 @@ public class CompareTxtJAVA {
             while ((eachLine = br.readLine()) != null) {
                 TxtAll += eachLine + "\n";
             }
+            
             //Split TxtAll 
             String[] STxt = TxtAll.split(",|\n");
-            //The STxt are saved to different arrays.
-            String[] name1,jpg,local,name2;
-            name1 = new String[(STxt.length / 5)];
-            jpg = new String[(STxt.length / 5)];
-            local = new String[(STxt.length / 5)];
-            name2 = new String[(STxt.length / 5)];
-            int name1index = 0,jpgindex = 1,localindex = 2,name2index = 3;
             
+            //The STxt are saved to different arrays.
+            String[] name1 = new String[(STxt.length / 5)];
+            int name1index = 0;
+            String[] jpg = new String[(STxt.length / 5)];
+            int jpgindex = 1;
+            String[] local = new String[(STxt.length / 5)];
+            int localindex = 2;
+            String[] name2 = new String[(STxt.length / 5)];
+            int name2index = 3;
             for (int i = 0; i < STxt.length / 5; i++) {
                 name1[i] = STxt[name1index];
                 name1index += 5;
@@ -75,68 +75,71 @@ public class CompareTxtJAVA {
                 localindex += 5;
                 name2[i] = STxt[name2index];
                 name2index += 5;
-            };
+            }
             
-            //Read file of the Synonym 
-            java.io.File[] SynonymWordCollection = new java.io.File(SynonymPath).listFiles();
-            
-            end();
-            System.out.println(getExecutionTime()/1000);
-            System.out.println("ReadTxt Finish.");
-
+            End();
+            System.out.println(GetExecutionTime());
+            System.out.println("NoRepeatJpg Finish.");
+            System.out.println("------------------------------");
             System.out.println("CompareTxt Starting...");
-            start();
+            Start();
             
+            //Create a new txt(true = no-cover && false = cover)
+            FileWriter sw2 = new FileWriter(NewTxtPath2, false);
+
             //Count success or unsuccess
-            int success = 0 , unsuccess = 0;
+            int success = 0;
+            int unsuccess = 0;
 
             //Compare name1 and name2
             for (int i = 0; i < name1.length; i++) {
                 if (name1[i].trim().equals(name2[i].trim())) {
-                    sw1.write( name1[i].trim() + "," + jpg[i].trim() + ","
-                             +  local[i].trim() + "," + name2[i].trim() + ","
-                             +  "True" + "\n" + "\n");
-                    
+                    sw2.write(name1[i].trim() + "," + jpg[i].trim() + "," + local[i].trim() + ","
+                             + name2[i].trim() + "," + "True" + "\n" + "\n");
+
                     success += 1;
-                    
                 } else {
-                    sw1.write( name1[i].trim() + "," + jpg[i].trim() + ","
-                             +  local[i].trim() + "," + name2[i].trim() + ","
-                             +  "false" + "\n" + "\n");
-                    
+                    sw2.write(name1[i].trim() + "," + jpg[i].trim() + "," + local[i].trim() + ","
+                             + name2[i].trim() + "," + "False" + "\n" + "\n");
+
                     unsuccess += 1;
                 }
             }
-            
-            //sw1
-            sw1.write( "total:" + (success + unsuccess) + "\n"
-                     +  "success total:" + (success) + "\n"
-                     +  "unsuccess total:" + (unsuccess) + "\n");
-            
-            System.out.println("total:" + (success + unsuccess));
+            //sw2
+            sw2.write("total:" + (success + unsuccess) + "\n"
+                     + "success total:" + (success) + "\n"
+                     + "unsuccess total:" + (unsuccess) + "\n");
+
+            sw2.close();
+            System.out.println("total" + (success + unsuccess));
             System.out.println("success total:" + (success));
             System.out.println("unsuccess total:" + (unsuccess));
-            
-            end();
-            System.out.println(getExecutionTime()/1000);
-            System.out.println("CompareTxt Finish.");
 
-            System.out.println("SynomyCompareTxt Starting...");
-            start();
+            End();
+            System.out.println(GetExecutionTime());
+            System.out.println("CompareTxt Finish.");
+            System.out.println("------------------------------");
+            System.out.println("CompareTxt2 Starting...");
+            Start();
             
+            //Create a new txt(true = no-cover && false = cover)
+            FileWriter sw4 = new FileWriter(NewTxtPath4, false);
+
             //Count success2 or unsuccess2
-            int success2 = 0 , unsuccess2 = 0;
+            int success2 = 0;
+            int unsuccess2 = 0;
             
+            //Read file of the Synonym 
+            java.io.File[] SynonymWordCollection = new java.io.File(SynonymPath).listFiles();
+
             //Compare name1 and name2 of the Synonym 
             for (int i = 0; i < name1.length; i++) {
                 if (name1[i].trim().equals(name2[i].trim())) {
-                    sw2.write( name1[i].trim() + "," + jpg[i].trim() + ","
-                             +  local[i].trim() + "," + name2[i].trim() + ","
-                             +  "True" + "\n" + "\n");
+                    sw4.write(name1[i].trim() + "," + jpg[i].trim() + "," + local[i].trim() + ","
+                             + name2[i].trim() + "," + "True" + "\n" + "\n");
 
                     success2 += 1;
-                } 
-                else {
+                } else {
                     for (int j = 0; j < SynonymWordCollection.length; j++) {
                         Boolean insuccess = false;
                         insuccess = false;
@@ -154,18 +157,18 @@ public class CompareTxtJAVA {
 
                             for (int SSWTcount = 0; SSWTcount < SSynonymWordTxt.length; SSWTcount++) {
                                 if (name2[i].trim().equals(SSynonymWordTxt[SSWTcount].trim())) {
-                                    sw2.write( name1[i].trim() + "," + jpg[i].trim() + ","
-                                             +  local[i].trim() + "," + name2[i].trim() + ","
-                                             +  "True" + "\n" + "\n");
+                                    sw4.write(name1[i].trim() + "," + jpg[i].trim() + ","
+                                             + local[i].trim() + "," + name2[i].trim() + ","
+                                             + "True" + "\n" + "\n");
 
                                     success2 += 1;
                                     insuccess = true;
                                 }
                             }
                             if (insuccess.equals(false)) {
-                                sw2.write( name1[i].trim() + "," + jpg[i].trim() + ","
-                                         +  local[i].trim() + "," + name2[i].trim() + ","
-                                         +  "false" + "\n" + "\n");
+                                sw4.write(name1[i].trim() + "," + jpg[i].trim() + ","
+                                         + local[i].trim() + "," + name2[i].trim() + ","
+                                         + "False" + "\n" + "\n");
 
                                 unsuccess2 += 1;
                             }
@@ -173,38 +176,35 @@ public class CompareTxtJAVA {
                     }
                 }
             }
-
-            //success2 or unsuccess2
-            sw2.write(  "total:" + (success2 + unsuccess2) + "\n");
-            sw2.write(  "success total:" + (success2) + "\n");
-            sw2.write(  "unsuccess total:" + (unsuccess2) + "\n");
             
+            //success2 or unsuccess2
+            sw4.write("total:" + (success2 + unsuccess2) + "\n"
+                     + "success total:" + (success2) + "\n"
+                     + "unsuccess total:" + (unsuccess2) + "\n");
+
+            sw4.close();
             System.out.println("total:" + (success2 + unsuccess2));
             System.out.println("success total:" + (success2));
             System.out.println("unsuccess total:" + (unsuccess2));
-            
-            end();
-            System.out.println(getExecutionTime()/1000);
-            System.out.println("SynomyCompareTxt Finish.");
-            
-            sw1.close();
-            sw2.close();
-            
-            System.out.println("OupputFiles Finish.");
+
+            End();
+            System.out.println(GetExecutionTime());
+            System.out.println("CompareTxt2 Finish.");
+            System.out.println("------------------------------");
         }
     }
     
-        long start, end;
+    long start, end;
 
-        public void start(){
-          start = System.currentTimeMillis();
-        }
+    public void Start(){
+      start = System.currentTimeMillis();
+    }
 
-        public void end(){
-          end = System.currentTimeMillis();
-        }
+    public void End(){
+      end = System.currentTimeMillis();
+    }
 
-        public long getExecutionTime(){
-          return (end - start);
-        }
+    public long GetExecutionTime(){
+      return (end - start);
+    }
 }

@@ -34,7 +34,6 @@ public class CompareTxtJAVA {
             System.out.println("CompareTxtJAVA Finish.");
         }
     }
-    /*Path*/
     
     //ReadPath
     private String TxtCaltechPath = "@../../File/Caltech101Results.txt";
@@ -55,6 +54,7 @@ public class CompareTxtJAVA {
     private void ReadTxt() throws IOException{
         {
             System.out.println("ReadTxt Starting...");
+            start();
             
             //Read Caltech101Results
             FileReader fr = new FileReader(TxtCaltechPath);
@@ -86,6 +86,8 @@ public class CompareTxtJAVA {
             //Read file of the Synonym 
             SynonymWordCollection = new java.io.File(SynonymPath).listFiles();
             
+            end();
+            System.out.println(getExecutionTime()/1000);
             System.out.println("ReadTxt Finish.");
     }
 }
@@ -93,6 +95,7 @@ public class CompareTxtJAVA {
     private void CompareTxt()throws IOException{
         {
             System.out.println("CompareTxt Starting...");
+            start();
             
             //Count success or unsuccess
             int success = 0 , unsuccess = 0;
@@ -124,6 +127,8 @@ public class CompareTxtJAVA {
             System.out.println("success total:" + (success));
             System.out.println("unsuccess total:" + (unsuccess));
             
+            end();
+            System.out.println(getExecutionTime()/1000);
             System.out.println("CompareTxt Finish.");
         }
     }
@@ -131,6 +136,7 @@ public class CompareTxtJAVA {
     private void SynomyCompareTxt()throws IOException{
         {
             System.out.println("SynomyCompareTxt Starting...");
+            start();
             
             //Count success2 or unsuccess2
             int success2 = 0 , unsuccess2 = 0;
@@ -191,6 +197,8 @@ public class CompareTxtJAVA {
             System.out.println("success total:" + (success2));
             System.out.println("unsuccess total:" + (unsuccess2));
             
+            end();
+            System.out.println(getExecutionTime()/1000);
             System.out.println("SynomyCompareTxt Finish.");
         }
     }
@@ -198,6 +206,7 @@ public class CompareTxtJAVA {
     private void OupputFiles()throws IOException{
         {
             System.out.println("OupputFiles Starting...");
+            start();
             
             /*CompareTxt*/
             //Create a new txt(true = no-cover && false = cover)
@@ -210,7 +219,23 @@ public class CompareTxtJAVA {
             sw1.close();
             sw2.close();
             
+            end();
+            System.out.println(getExecutionTime()/1000);
             System.out.println("OupputFiles Finish.");
         }
+    }
+    
+    long start, end;
+
+    public void start(){
+      start = System.currentTimeMillis();
+    }
+
+    public void end(){
+      end = System.currentTimeMillis();
+    }
+
+    public long getExecutionTime(){
+      return (end - start);
     }
 }
