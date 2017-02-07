@@ -85,11 +85,11 @@ public class CompareTxtJAVA {
             System.out.println("ReadTxt Finish.");
 
             System.out.println("CompareTxt Starting...");
-            start();
+            
             
             //Count success or unsuccess
             int success = 0 , unsuccess = 0;
-
+start();
             //Compare name1 and name2
             for (int i = 0; i < name1.length; i++) {
                 if (name1[i].trim().equals(name2[i].trim())) {
@@ -107,7 +107,7 @@ public class CompareTxtJAVA {
                     unsuccess += 1;
                 }
             }
-            
+end();            
             //sw1
             sw1.write( "total:" + (success + unsuccess) + "\n"
                      +  "success total:" + (success) + "\n"
@@ -117,7 +117,7 @@ public class CompareTxtJAVA {
             System.out.println("success total:" + (success));
             System.out.println("unsuccess total:" + (unsuccess));
             
-            end();
+            
             System.out.println(getExecutionTime()/1000);
             System.out.println("CompareTxt Finish.");
 

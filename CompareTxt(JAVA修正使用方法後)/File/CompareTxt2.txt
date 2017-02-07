@@ -1,4 +1,4 @@
-nullaccordion,image_0002.jpg,/m/04szw,musical instrument,false
+accordion,image_0002.jpg,/m/04szw,musical instrument,false
 
 accordion,image_0002.jpg,/m/05r5c,piano,false
 
