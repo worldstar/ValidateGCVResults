@@ -24,8 +24,15 @@ public class Readtxt {
     private int[] deadline;
     private double[] revenue;
       
-    public void setReadTxtSize(int ReadTxtSize) {
-        this.ReadTxtSize = ReadTxtSize;
+    public void setSize(int ReadTxtSize) {
+      if(ReadTxtSize > 0 && ReadTxtSize <= TxtLength)
+        {
+          this.ReadTxtSize = ReadTxtSize;
+        }else
+        {
+          System.out.println("Current Length of setSize is too long or too short.");
+          System.exit(0);
+        }
     }
     public void setReadTxtData(String fileName) {
         this.fileName = fileName;
@@ -48,17 +55,18 @@ public class Readtxt {
     }
     
     private void SaveValueOfTxt(int TxtSize) {
-        if(TxtSize > 0 && TxtSize <= TxtLength)
-        {
+      if(TxtSize > 0)
+      {
           //Set Size
           int Numberindex = 4,due_dayindex = 5,processingTimeindex = 7;
           Number = new String[TxtSize];
           processingTime = new int[TxtSize];
           dueDate = new int[TxtSize];
-          setReadTxtSize(TxtSize);
+          setSize(TxtSize);
 
           //save value of Txt
-          for (int i = 0; i < TxtSize; i++) {
+          for (int i = 0; i < TxtSize; i++) 
+          {
               Number[i] = STxt[Numberindex];
               Numberindex += 4;
               dueDate[i] = Integer.parseInt(STxt[due_dayindex]);
@@ -66,10 +74,10 @@ public class Readtxt {
               processingTime[i] = Integer.parseInt(STxt[processingTimeindex]);
               processingTimeindex += 4;
           }
-        }else
-        {
-          System.out.print("Current Length is too long or too short.");
-        }
+      }else
+      {
+        System.out.println("Current Length of SaveValueOfTxt must be greater than zero.");
+      }
     }
     
     public void output(){
@@ -89,7 +97,7 @@ public class Readtxt {
         Readtxt RT = new Readtxt();
         RT.setReadTxtData(".\\instances\\parallelMachine.txt");
         RT.ReadTxt();
-        RT.SaveValueOfTxt(TxtLength);
+        RT.SaveValueOfTxt(0);
         RT.output();
       }
     }
