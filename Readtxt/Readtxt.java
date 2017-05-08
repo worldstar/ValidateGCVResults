@@ -56,21 +56,24 @@ public class Readtxt {
     
     private void ReadTxt() throws IOException{
         {
+            //Read Txt
             FileReader fr = new FileReader(fileName);
             BufferedReader br = new BufferedReader(fr);
             String TxtAll = "", eachLine = "";
             while ((eachLine = br.readLine()) != null) {
                 TxtAll += eachLine + "\n";
-            }
-            //Split TxtAll 
+            }                     
             String[] STxt = TxtAll.split("\t|\n");
             
-            Number = new String[(STxt.length / 4)-1];
-            processingTime = new int[(STxt.length / 4)-1];
-            dueDate = new int[(STxt.length / 4)-1];
-            
+            //Set Size
             int Numberindex = 4,due_dayindex = 5,processingTimeindex = 7;
-            for (int i = 0; i < ((STxt.length) / 4)-1; i++) {
+            int STxtlength = (STxt.length / 4)-1;
+            Number = new String[STxtlength];
+            processingTime = new int[STxtlength];
+            dueDate = new int[STxtlength];
+            
+            //save value of Txt
+            for (int i = 0; i < STxtlength; i++) {
                 Number[i] = STxt[Numberindex];
                 Numberindex += 4;
                 dueDate[i] = Integer.parseInt(STxt[due_dayindex]);
@@ -83,7 +86,7 @@ public class Readtxt {
     
     public void output()
     {
-      for(int i = 1 ; i < Number.length;i++)
+      for(int i = 0 ; i < Number.length;i++)
       {
         System.out.println("Number : " + Number[i] + "\t");
         System.out.println("processing time : " + processingTime[i] + "\t");
