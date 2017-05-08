@@ -24,16 +24,6 @@ public class Readtxt {
     private int[] deadline;
     private double[] revenue;
       
-    public void setSize(int ReadTxtSize) {
-      if(ReadTxtSize > 0 && ReadTxtSize <= TxtLength)
-        {
-          this.ReadTxtSize = ReadTxtSize;
-        }else
-        {
-          System.out.println("Current Length of setSize is too long or too short.");
-          System.exit(0);
-        }
-    }
     public void setReadTxtData(String fileName) {
         this.fileName = fileName;
     }
@@ -92,14 +82,15 @@ public class Readtxt {
       }
     }
     
-    public static void main(String[] args) throws IOException{
-      {
-        Readtxt RT = new Readtxt();
-        RT.setReadTxtData(".\\instances\\parallelMachine.txt");
-        RT.ReadTxt();
-        RT.SaveValueOfTxt(0);
-        RT.output();
-      }
+    public void setSize(int ReadTxtSize) {
+      if(ReadTxtSize > 0 && ReadTxtSize <= TxtLength)
+        {
+          this.ReadTxtSize = ReadTxtSize;
+        }else
+        {
+          System.out.println("Current Length of setSize is too long or too short.");
+          System.exit(0);
+        }
     }
     
     public int getReadTxtSize() {
@@ -141,5 +132,15 @@ public class Readtxt {
     public String getTxtData()
     {
       return fileName;
+    }
+    
+    public static void main(String[] args) throws IOException{
+      {
+        Readtxt RT = new Readtxt();
+        RT.setReadTxtData(".\\instances\\parallelMachine.txt");
+        RT.ReadTxt();
+        RT.SaveValueOfTxt(0);
+        RT.output();
+      }
     }
 }
