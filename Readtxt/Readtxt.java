@@ -23,48 +23,14 @@ public class Readtxt {
     private int[] dueDate;
     private int[] deadline;
     private double[] revenue;
-  
-    public void setTxtLength(int TxtLength) {
-        this.TxtLength = TxtLength;
-    }
-    
+      
     public void setReadTxtSize(int ReadTxtSize) {
         this.ReadTxtSize = ReadTxtSize;
     }
-  
-    public void setcompletionTime(int[] completionTime) {
-        this.completionTime = completionTime;
+    public void setReadTxtData(String fileName) {
+        this.fileName = fileName;
     }
-
-    public void setSequence(int[] Sequence) {
-        this.Sequence = Sequence;
-    }
-
-    public void setProcessingTime(int[] processingTime) {
-        this.processingTime = processingTime;
-    }
-
-    public void setReleaseDate(int[] releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-
-    public void setDueDate(int[] dueDate) {
-        this.dueDate = dueDate;
-    }
-
-    public void setDeadline(int[] deadline) {
-        this.deadline = deadline;
-    }
-
-    public void setRevenue(double[] revenue) {
-        this.revenue = revenue;
-    }
-    
-    public void setReadTxtData(String fileName)
-    {
-      this.fileName = fileName;
-    }
-    
+        
     private void ReadTxt() throws IOException{
         {
             //Read Txt
@@ -77,7 +43,7 @@ public class Readtxt {
             STxt = TxtAll.split("\t|\n");
             
             //Total TxtLength 
-            setTxtLength((STxt.length / NumberOfColumns)-1);
+            TxtLength = (STxt.length / NumberOfColumns)-1;
         }
     }
     
